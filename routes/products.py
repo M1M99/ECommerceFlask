@@ -11,6 +11,7 @@ def list_products():
     products = Product.query.all()
     return jsonify(product_list_schema.dump(products))
 
+
 @product_api.route('/product', methods=['POST'])
 def create_product():
     data = request.get_json()
