@@ -11,7 +11,7 @@ order_schema = OrderSchema()
 @order_api.get('/')
 def list_orders():
     orders = Order.query.all()
-    return jsonify( order_list_schema.dump(orders))
+    return jsonify(order_list_schema.dump(orders))
 
 @order_api.post('/create')
 def create_order():
@@ -20,13 +20,13 @@ def create_order():
         order = order_schema.load(request_data,session=db.session)
         db.session.add(order)
         db.session.commit()
-        return order_schema.dump(order)
+        return jsonify(order_schema.dump(order)), 201
     except ValidationError as e:
-        return jsonify({'message': e.messages})
+        return jsonify({'message': e.messages}),400
 
 
 
 @order_api.get('/client/<int:client_id>')
 def list_orders_by_client(client_id):
     orders = Order.query.filter_by(client_id=client_id).all()
-    return jsonify(order_list_schema.dump(orders))
+    return jsonify(order_list_schema.dump(orders)),200
