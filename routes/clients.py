@@ -24,9 +24,9 @@ def delete_client(client_id):
     client = Client.query.get_or_404(client_id)
     db.session.delete(client)
     db.session.commit()
-    return jsonify(client_schema.dump(client)), 204
+    return '', 204
 
-@client_api.put('/<int:client_id>')
+@client_api.route('/<int:client_id>',methods=['PUT','PATCH'])
 def update_client(client_id):
     client = Client.query.get_or_404(client_id)
     request_data = request.get_json() or {}
@@ -35,4 +35,10 @@ def update_client(client_id):
             setattr(client, key, value)
     db.session.commit()
     return jsonify(client_schema.dump(client)), 200
+
+
+@client_api.get('/<int:client_id>')
+def client_by_id(client_id):
+    client = Client.query.get_or_404(client_id)
+    return jsonify(client_schema.dump(client))
 

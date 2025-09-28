@@ -1,11 +1,10 @@
 from flask import Blueprint, jsonify, request
 from models import db, Product, Category
-from schemas import ProductSchema, CategorySchema
+from schemas import ProductSchema
 
 product_api = Blueprint('api', __name__, url_prefix='/api')
 product_schema = ProductSchema()
 product_list_schema = ProductSchema(many=True)
-#products
 
 @product_api.route('/products', methods=['GET'])
 def list_products():

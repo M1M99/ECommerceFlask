@@ -38,3 +38,15 @@ class Order(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
     client = db.relationship('Client', back_populates='orders')
+
+    items = db.relationship('OrderItem', back_populates='order', cascade='all, delete-orphan')
+
+class OrderItem(db.Model):
+    __tablename__ = 'order_items'
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
+    product_id = db.Column(db.Integer, db.ForeignKey('products.id'))
+    quantity = db.Column(db.Integer, nullable=False, default=1)
+
+    order = db.relationship('Order', back_populates='items')
+    product = db.relationship('Product')
