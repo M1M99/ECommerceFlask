@@ -6,7 +6,6 @@ client_api = Blueprint('client_api', __name__, url_prefix='/api/clients')
 client_schema = ClientSchema()
 client_list_schema = ClientSchema(many=True)
 
-
 @client_api.get('/')
 def list_clients():
     clients = Client.query.all()
