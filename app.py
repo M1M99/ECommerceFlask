@@ -1,14 +1,14 @@
 from flask import Flask
 from models import db
-from routes import api
 from flask_cors import CORS
+from routes import register_blueprints
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 CORS(app)
-app.register_blueprint(api)
+register_blueprints(app)
 with app.app_context():
     db.create_all()
 
